@@ -2,7 +2,36 @@
 
 package net.ezra.ui.students
 
+import android.annotation.SuppressLint
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.Card
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import net.ezra.R
+import net.ezra.navigation.ROUTE_ABOUT_US
+import net.ezra.navigation.ROUTE_ADD_PRODUCT
+import net.ezra.navigation.ROUTE_DASHBOARD
+import net.ezra.navigation.ROUTE_HOME
+import net.ezra.navigation.ROUTE_SEARCH
 
+/*
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.app.ProgressDialog
@@ -459,6 +488,161 @@ fun saveToFirestore(
 @Composable
 fun PreviewLight() {
     AddStudents(rememberNavController())
+}
+*/
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter", "UnusedMaterialScaffoldPaddingParameter")
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterialApi::class)
+@Composable
+fun AddStudents(navController: NavHostController){
+    Scaffold(
+        topBar = {
+            CenterAlignedTopAppBar(
+                title = {
+                    androidx.compose.material3.Text(text = "ARTICLES")
+                },
+                navigationIcon = {
+                    androidx.compose.material3.IconButton(onClick = {
+                        navController.navigate(ROUTE_HOME) {
+                            popUpTo(ROUTE_SEARCH) { inclusive = true }
+                        }
+                    }) {
+                        androidx.compose.material3.Icon(
+                            Icons.AutoMirrored.Filled.ArrowBack,
+                            "backIcon",
+                            tint = Color.White
+                        )
+                    }
+
+                },
+                actions = {
+                    androidx.compose.material3.IconButton(onClick = {
+                        navController.navigate(ROUTE_ADD_PRODUCT) {
+                            popUpTo(ROUTE_DASHBOARD) { inclusive = true }
+                        }
+
+                    }) {
+                        androidx.compose.material3.Icon(
+                            imageVector = Icons.Filled.Add,
+                            contentDescription = null,
+                            tint = Color.White
+                        )
+                    }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = Color(0xff0505562),
+                    titleContentColor = Color.White,
+
+                    )
+
+            )
+        },
+
+        content = @Composable {
+LazyColumn {
+    item {
+        Column {
+            Card(
+                modifier = Modifier
+
+                ,
+                onClick = {
+                    navController.navigate(ROUTE_ABOUT_US)
+                },
+
+                ) {
+                Image(
+                    painter = painterResource(id = R.drawable.parkie2), // Jesus is my anchor
+                    contentDescription = "acquaint",
+                    modifier = Modifier
+                )
+                  }
+            Text(style = androidx.compose.material.MaterialTheme.typography.h6,
+                text = "Do you have your hiking boots?..Don't miss out on an interactive opportunity to keep fit and to take in the beauty of nature.")
+
+
+            Spacer(modifier = Modifier.height(40.dp))
+            Card(
+                modifier = Modifier
+
+                ,
+                onClick = {
+                   // navController.navigate(ROUTE_ABOUT_US)
+                },
+
+                ) {
+                Image(
+                    painter = painterResource(id = R.drawable.parkie3), // Jesus is my anchor
+                    contentDescription = "acquaint",
+                    modifier = Modifier
+                )
+                   }
+            Text(style = androidx.compose.material.MaterialTheme.typography.h6,
+                text = "Network as you get to broaden your knowledge.Have networth and wisdom ")
+
+            Spacer(modifier = Modifier.height(40.dp))
+            Card(
+                modifier = Modifier
+
+                ,
+                onClick = {
+                    //navController.navigate(ROUTE_ABOUT_US)
+                },
+
+                ) {
+                Image(
+                    painter = painterResource(id = R.drawable.parklands), // Jesus is my anchor
+                    contentDescription = "acquaint",
+                    modifier = Modifier
+                )
+            }
+            Text(style = androidx.compose.material.MaterialTheme.typography.h6,
+                text = "DO you have the spirit of koinonia??....If you are wondering what that is the don't miss out on this Sunday services ")
+
+            Spacer(modifier = Modifier.height(40.dp))
+            Card(
+                modifier = Modifier
+
+                ,
+                onClick = {
+                    //navController.navigate(ROUTE_ABOUT_US)
+                },
+
+                ) {
+                Image(
+                    painter = painterResource(id = R.drawable.parkie4), // Jesus is my anchor
+                    contentDescription = "acquaint",
+                    modifier = Modifier
+                )
+                    }
+            Text(style = androidx.compose.material.MaterialTheme.typography.h6,
+                text = "Come one come all to the campus community sports day...Let loose from all the academic pressure and have fun")
+            Spacer(modifier = Modifier.height(40.dp))
+            Card(
+                modifier = Modifier
+
+                ,
+                onClick = {
+                    // navController.navigate(ROUTE_ABOUT_US)
+                },
+
+                ) {
+                Image(
+                    painter = painterResource(id = R.drawable.parkie1), // Jesus is my anchor
+                    contentDescription = "acquaint",
+                    modifier = Modifier
+                )
+                 }
+            Text(style = androidx.compose.material.MaterialTheme.typography.h6,
+                text = "Join Parklands Baptist for bible study every friday ")
+
+        }
+    }
+}
+
+
+            },
+        )
+
 }
 
 

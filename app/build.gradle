@@ -86,6 +86,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-database:20.3.1'
     implementation 'com.google.firebase:firebase-storage-ktx:20.3.0'
     implementation 'com.google.firebase:firebase-auth-ktx:22.0.0'
+    implementation 'androidx.compose.runtime:runtime-saved-instance-state:1.0.0-alpha11'
 
     kapt "com.google.dagger:hilt-android-compiler:2.42"
 

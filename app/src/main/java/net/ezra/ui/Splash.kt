@@ -36,12 +36,12 @@ fun SplashScreen(navController: NavHostController) {
             targetValue = 0.7f,
             // tween Animation
             animationSpec = tween(
-                durationMillis = 800,
+                durationMillis = 300,
                 easing = {
                     OvershootInterpolator(4f).getInterpolation(it)
                 }))
         // Customize the delay time
-        delay(3000L)
+        delay(300L)
         navController.navigate(ROUTE_HOME)
     }
 
@@ -52,12 +52,14 @@ fun SplashScreen(navController: NavHostController) {
         horizontalAlignment = Alignment.CenterHorizontally
     ){
 
-        Image(painter = painterResource(id = R.drawable.logo),
-            contentDescription = "Logo",
-            modifier = Modifier.scale(scale.value)
+        Image(painter = painterResource(id = R.drawable.flamingtorch),
+            contentDescription = "Acquaint logo",
+            modifier = Modifier
+                .scale(scale.value)
+                .fillMaxSize()
         )
 
-        Text("Apen Softwares")
+        Text("Acquaint-NYM")
 
 
 

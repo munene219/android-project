@@ -23,12 +23,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import java.lang.reflect.Modifier
 
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
-fun Test(){
+fun Test(navController: NavHostController){
 
     Scaffold(
         topBar = {
@@ -55,7 +56,7 @@ fun Test(){
                     .background(Color(0xff8d6e63)),
             ) {
 
-
+Text(text = "blaaa")
 
 
 
@@ -63,14 +64,14 @@ fun Test(){
 
         },
 
-        bottomBar = { BottomBar() }
+   //     bottomBar = { BottomBar() }
 
 
 
     )
 
 }
-
+/*
 @Composable
 fun BottomBar() {
     val selectedIndex = remember { mutableStateOf(0) }
@@ -104,3 +105,5 @@ fun BottomBar() {
 fun ScaffoldPreview() {
    Test()
 }
+
+ */

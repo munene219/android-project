@@ -43,13 +43,13 @@ import java.util.*
 fun AddProductScreen(navController: NavController, onProductAdded: () -> Unit) {
     var productName by remember { mutableStateOf("") }
     var productDescription by remember { mutableStateOf("") }
-    var productPrice by remember { mutableStateOf("") }
+    var articleType by remember { mutableStateOf("") }
     var productImageUri by remember { mutableStateOf<Uri?>(null) }
 
     // Track if fields are empty
     var productNameError by remember { mutableStateOf(false) }
     var productDescriptionError by remember { mutableStateOf(false) }
-    var productPriceError by remember { mutableStateOf(false) }
+    var articleTypeError by remember { mutableStateOf(false) }
     var productImageError by remember { mutableStateOf(false) }
 
     val launcher = rememberLauncherForActivityResult(contract = ActivityResultContracts.GetContent()) { uri: Uri? ->
@@ -76,7 +76,7 @@ fun AddProductScreen(navController: NavController, onProductAdded: () -> Unit) {
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color(0xff0FB06A),
+                    containerColor = Color(0xff0505562),
                     titleContentColor = Color.White,
                 )
             )
@@ -85,104 +85,110 @@ fun AddProductScreen(navController: NavController, onProductAdded: () -> Unit) {
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(Color(0xff9AEDC9))
+                    .background(Color.Gray)
             ) {
                 item {
-                    if (productImageUri != null) {
-                        // Display selected image
-                        Image(
-                            painter = rememberImagePainter(productImageUri), // Using rememberImagePainter with Uri
-                            contentDescription = null,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(200.dp)
-                        )
-                    } else {
-                        // Display placeholder if no image selected
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(200.dp),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            Text("No Image Selected", modifier = Modifier.padding(8.dp))
-                        }
-                    }
-                    Spacer(modifier = Modifier.height(16.dp))
-                    Button(onClick = { launcher.launch("image/*") }) {
-                        Text("Select Image")
-                    }
-                    Spacer(modifier = Modifier.height(16.dp))
-                    TextField(
-                        value = productName,
-                        onValueChange = { productName = it },
-                        label = { Text("Product Name") },
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    TextField(
-                        value = productDescription,
-                        onValueChange = { productDescription = it },
-                        label = { Text("Product Description") },
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    TextField(
-                        value = productPrice,
-                        onValueChange = { productPrice = it },
-                        label = { Text("Product Price") },
-                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                        keyboardActions = KeyboardActions(onDone = { /* Handle Done action */ }),
-                        modifier = Modifier.fillMaxWidth()
-                    )
-                    Spacer(modifier = Modifier.height(16.dp))
+                   Column(
+                       modifier = Modifier
+                           .fillMaxSize()
+                           .background(Color(0xffaa918c)),
 
-                    if (productNameError) {
-                        Text("Product Name is required", color = Color.Red)
-                    }
-                    if (productDescriptionError) {
-                        Text("Product Description is required", color = Color.Red)
-                    }
-                    if (productPriceError) {
-                        Text("Product Price is required", color = Color.Red)
-                    }
-                    if (productImageError) {
-                        Text("Product Image is required", color = Color.Red)
-                    }
+                       horizontalAlignment = Alignment.CenterHorizontally
+                   ) {
+                       if (productImageUri != null) {
+                           // Display selected image
+                           Image(
+                               painter = rememberImagePainter(productImageUri), // Using rememberImagePainter with Uri
+                               contentDescription = null,
+                               modifier = Modifier
+                                   .fillMaxWidth()
+                                   .height(200.dp)
+                           )
+                       } else {
+                           // Display placeholder if no image selected
+                           Box(
+                               modifier = Modifier
+                                   .fillMaxWidth()
+                                   .height(200.dp),
+                               contentAlignment = Alignment.Center
+                           ) {
+                               Text("No Image Selected", modifier = Modifier.padding(8.dp))
+                           }
+                       }
+                       Spacer(modifier = Modifier.height(16.dp))
+                       Button(onClick = { launcher.launch("image/*") }) {
+                           Text("Select Image")
+                       }
+                       Spacer(modifier = Modifier.height(16.dp))
+                       TextField(
+                           value = productName,
+                           onValueChange = { productName = it },
+                           label = { Text("plan Name") },
+                           modifier = Modifier.fillMaxWidth()
+                       )
+                       Spacer(modifier = Modifier.height(8.dp))
+                       TextField(
+                           value = productDescription,
+                           onValueChange = { productDescription = it },
+                           label = { Text("Plan Description") },
+                           modifier = Modifier.fillMaxWidth()
+                       )
+                       Spacer(modifier = Modifier.height(8.dp))
+                       TextField(
+                           value = articleType,
+                           onValueChange = {articleType = it },
+                           label = { Text("Type of plan") },
+                           modifier = Modifier.fillMaxWidth()
+                       )
+                       Spacer(modifier = Modifier.height(16.dp))
 
-                    // Button to add product
-                    Button(
-                        onClick = {
-                            // Reset error flags
-                            productNameError = productName.isBlank()
-                            productDescriptionError = productDescription.isBlank()
-                            productPriceError = productPrice.isBlank()
-                            productImageError = productImageUri == null
+                       if (productNameError) {
+                           Text("Plan Name is required", color = Color.Red)
+                       }
+                       if (productDescriptionError) {
+                           Text("Plan Description is required", color = Color.Red)
+                       }
+                       if (articleTypeError) {
+                           Text("Plan type is required", color = Color.Red)
+                       }
+                       if (productImageError) {
+                           Text("Plan Image is required", color = Color.Red)
+                       }
 
-                            // Add product if all fields are filled
-                            if (!productNameError && !productDescriptionError && !productPriceError && !productImageError) {
-                                addProductToFirestore(
-                                    navController,
-                                    onProductAdded,
-                                    productName,
-                                    productDescription,
-                                    productPrice.toDouble(),
-                                    productImageUri
-                                )
-                            }
-                        },
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Text("Add Product")
-                    }
+                       // Button to add product
+                       Button(
+                           onClick = {
+                               // Reset error flags
+                               productNameError = productName.isBlank()
+                               productDescriptionError = productDescription.isBlank()
+                               articleTypeError = articleType.isBlank()
+                               productImageError = productImageUri == null
+
+                               // Add product if all fields are filled
+                               if (!productNameError && !productDescriptionError && !articleTypeError && !productImageError) {
+                                   addProductToFirestore(
+                                       navController,
+                                       onProductAdded,
+                                       productName,
+                                       productDescription,
+                                       articleType,
+                                       productImageUri
+                                   )
+                               }
+                           },
+                           modifier = Modifier.fillMaxWidth()
+                       ) {
+                           Text("Add Product")
+                       }
+                   }
                 }
             }
         }
     )
 }
 
-private fun addProductToFirestore(navController: NavController, onProductAdded: () -> Unit, productName: String, productDescription: String, productPrice: Double, productImageUri: Uri?) {
-    if (productName.isEmpty() || productDescription.isEmpty() || productPrice.isNaN() || productImageUri == null) {
+private fun addProductToFirestore(navController: NavController, onProductAdded: () -> Unit, productName: String, productDescription: String, articleType: String, productImageUri: Uri?) {
+    if (productName.isEmpty() || productDescription.isEmpty() || articleType.isEmpty() || productImageUri == null) {
         // Validate input fields
         return
     }
@@ -193,7 +199,7 @@ private fun addProductToFirestore(navController: NavController, onProductAdded: 
     val productData = hashMapOf(
         "name" to productName,
         "description" to productDescription,
-        "price" to productPrice,
+        "Type of Plan" to articleType,
         "imageUrl" to ""
     )
 
@@ -212,7 +218,7 @@ private fun addProductToFirestore(navController: NavController, onProductAdded: 
                         ).show()
 
                         // Navigate to another screen
-                        navController.navigate(ROUTE_HOME)
+                        navController.navigate(ROUTE_VIEW_PROD)
 
                         // Invoke the onProductAdded callback
                         onProductAdded()
@@ -229,7 +235,7 @@ private fun addProductToFirestore(navController: NavController, onProductAdded: 
 
 private fun uploadImageToStorage(productId: String, imageUri: Uri?, onSuccess: (String) -> Unit) {
     if (imageUri == null) {
-        onSuccess("")
+        onSuccess("successfully added")
         return
     }
 

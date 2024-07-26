@@ -61,7 +61,7 @@ data class Product(
     var id: String = "",
     val name: String = "",
     val description: String ="",
-    val price: Double = 0.0,
+    val articleType: String ="",
     var imageUrl: String = ""
 )
 
@@ -73,7 +73,7 @@ data class Product(
 fun ProductListScreen(navController: NavController, products: List<Product>) {
     var isLoading by remember { mutableStateOf(true) }
     var productList by remember { mutableStateOf(emptyList<Product>()) }
-    var displayedProductCount by remember { mutableStateOf(1) }
+    var displayedProductCount by remember { mutableStateOf(10) }
     var progress by remember { mutableStateOf(0) }
 
     LaunchedEffect(Unit) {
@@ -87,7 +87,7 @@ fun ProductListScreen(navController: NavController, products: List<Product>) {
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
-                    Text(text = "Products",fontSize = 30.sp, color = Color.White)
+                    Text(text = "Plans",fontSize = 30.sp, color = Color.White)
                 },
                 navigationIcon = {
                     IconButton(onClick = {
@@ -102,7 +102,7 @@ fun ProductListScreen(navController: NavController, products: List<Product>) {
                 },
 
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color(0xff0FB06A),
+                    containerColor = Color(0xff0505562),
                     titleContentColor = Color.White,
 
                     )
@@ -113,7 +113,7 @@ fun ProductListScreen(navController: NavController, products: List<Product>) {
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(Color(0xff9AEDC9))
+                    .background(Color(0xffaa918c))
             ) {
                 if (isLoading) {
                     // Progress indicator
@@ -122,7 +122,7 @@ fun ProductListScreen(navController: NavController, products: List<Product>) {
                         contentAlignment = Alignment.Center
                     ) {
                         CircularProgressIndicator(progress = progress / 100f)
-                        Text(text = "Loading... $progress%", fontSize = 20.sp)
+                        Text(text = "Loading... ", fontSize = 20.sp)
                     }
                 } else {
                     if (productList.isEmpty()) {
@@ -141,7 +141,7 @@ fun ProductListScreen(navController: NavController, products: List<Product>) {
                         // Load More Button
                         if (displayedProductCount < productList.size) {
                             Button(
-                                colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xff0FB06A)),
+                                colors = ButtonDefaults.buttonColors(backgroundColor = Color.Gray),
                                 onClick = { displayedProductCount += 1 },
                                 modifier = Modifier.align(Alignment.CenterHorizontally)
                             ) {
@@ -179,8 +179,8 @@ fun ProductListItem(product: Product, onItemClick: (String) -> Unit) {
 
             // Product Details
             Column {
+                Text(text = "type of plan : ${product.articleType}")
                 Text(text = product.name)
-                Text(text = "Price: ${product.price}")
             }
         }
     }

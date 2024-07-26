@@ -60,7 +60,7 @@ fun ProductDetailScreen(navController: NavController, productId: String) {
                 title = {
                     // Display the product name if available
                     Text(
-                        text = product?.name ?: "Details",
+                        text = product?.name ?: "Articles",
                         fontSize = 30.sp,
                         color = Color.White
                     )
@@ -97,7 +97,7 @@ fun ProductDetailScreen(navController: NavController, productId: String) {
                         )
                         Text(text = it.name, style = MaterialTheme.typography.h5)
                         Spacer(modifier = Modifier.height(8.dp))
-                        Text(text = "Price: ${it.price}", style = MaterialTheme.typography.subtitle1)
+                        Text(text = "Article name: ${it.articleType}", style = MaterialTheme.typography.subtitle1)
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(text = it.description, style = MaterialTheme.typography.body1)
                     }
@@ -110,7 +110,7 @@ fun ProductDetailScreen(navController: NavController, productId: String) {
 
 suspend fun fetchProduct(productId: String): Product? {
     val db = FirebaseFirestore.getInstance()
-    val productsCollection = db.collection("products")
+    val productsCollection = db.collection("Articles")
 
     return try {
         val documentSnapshot = productsCollection.document(productId).get().await()
@@ -119,6 +119,8 @@ suspend fun fetchProduct(productId: String): Product? {
             Product(
                 id = productId,
                 name = productData["name"] as String,
+                //description = productData["description"] as String,
+              //  articleType = productData["article type"] as String,
                 // Add other product properties here
             )
         } else {
